@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "784676451966",
+    "firebase_url": "https://smartphonesdatabase-29647.firebaseio.com",
+    "project_id": "smartphonesdatabase-29647",
+    "storage_bucket": "smartphonesdatabase-29647.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784676451966:android:bf5c7e77ff6144ec",
+        "android_client_info": {
+          "package_name": "com.example.smartphonesdatabase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJNJ4M4_-rkShqPwKlq07o9ruszcwPTTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784676451966-96ljp7cbo54ipmet78r30efvuogrcltl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
