@@ -49,15 +49,15 @@
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/manufacturerInput" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="@+id/manufacturerInput"/>
+            app:layout_constraintBottom_toBottomOf="@+id/brandInput" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="@+id/brandInput"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/manufacturerInput" android:layout_marginTop="8dp"
+            android:id="@+id/brandInput" android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/manufacturer_textview"
             android:layout_marginStart="16dp" android:layout_marginLeft="16dp" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp" android:textSize="20sp"
@@ -68,8 +68,8 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:textColor="@android:color/black"
-            android:id="@+id/editText2" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/manufacturerInput" android:hint="model"
+            android:id="@+id/modelInput" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/brandInput" android:hint="model"
             app:layout_constraintStart_toEndOf="@+id/model_textview" android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="8dp"/>
@@ -81,15 +81,15 @@
             android:id="@+id/model_textview"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/editText2"
-            app:layout_constraintTop_toTopOf="@+id/editText2" android:textSize="20sp"/>
+            app:layout_constraintBottom_toBottomOf="@+id/modelInput"
+            app:layout_constraintTop_toTopOf="@+id/modelInput" android:textSize="20sp"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/systemVersionInput" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/editText2"
+            app:layout_constraintTop_toBottomOf="@+id/modelInput"
             app:layout_constraintStart_toEndOf="@+id/systemVersion_textView" android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="8dp" android:hint="Wersja systemu"/>

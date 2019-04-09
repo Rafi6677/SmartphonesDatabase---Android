@@ -90,11 +90,11 @@ class SmartphonesListActivity : AppCompatActivity() {
                 }
 
                 adapter.setOnItemClickListener { item, view ->
-                    val smartphoneItem = item as SmartphoneItem
+                    /*val smartphoneItem = item as SmartphoneItem
 
                     val intent = Intent(view.context, AddDataActivity::class.java)
                     intent.putExtra(SMARTPHONE_KEY, smartphoneItem.smartphone)
-                    startActivity(intent)
+                    startActivity(intent)*/
                 }
 
                 recyclerView_SmartphonesList.adapter = adapter
