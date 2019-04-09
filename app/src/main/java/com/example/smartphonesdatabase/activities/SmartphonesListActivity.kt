@@ -3,6 +3,8 @@ package com.example.smartphonesdatabase.activities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.example.smartphonesdatabase.R
 import com.example.smartphonesdatabase.models.Smartphone
 import com.google.firebase.database.DataSnapshot
@@ -31,6 +33,26 @@ class SmartphonesListActivity : AppCompatActivity() {
         setupData()*/
 
         showData()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.nav_menu, menu)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.addSmartphone -> {
+                val intent = Intent(this, AddDataActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.deleteSmartphone -> {
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupData() {
@@ -70,7 +92,7 @@ class SmartphonesListActivity : AppCompatActivity() {
                 adapter.setOnItemClickListener { item, view ->
                     val smartphoneItem = item as SmartphoneItem
 
-                    val intent = Intent(view.context, EditDataActivity::class.java)
+                    val intent = Intent(view.context, AddDataActivity::class.java)
                     intent.putExtra(SMARTPHONE_KEY, smartphoneItem.smartphone)
                     startActivity(intent)
                 }
