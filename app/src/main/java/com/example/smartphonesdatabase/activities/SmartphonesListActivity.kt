@@ -28,10 +28,6 @@ class SmartphonesListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_smartphones_list)
 
-        /*setupData()
-        setupData()
-        setupData()*/
-
         showData()
     }
 
@@ -57,7 +53,6 @@ class SmartphonesListActivity : AppCompatActivity() {
 
     private fun setupData() {
         val id = UUID.randomUUID().toString()
-        println(id)
         val brand = "Huawei"
         val model = "P9"
         val systemVersion = "Android 7.0"
@@ -90,11 +85,11 @@ class SmartphonesListActivity : AppCompatActivity() {
                 }
 
                 adapter.setOnItemClickListener { item, view ->
-                    /*val smartphoneItem = item as SmartphoneItem
+                    val smartphoneItem = item as SmartphoneItem
 
-                    val intent = Intent(view.context, AddDataActivity::class.java)
+                    val intent = Intent(view.context, EditDataActivity::class.java)
                     intent.putExtra(SMARTPHONE_KEY, smartphoneItem.smartphone)
-                    startActivity(intent)*/
+                    startActivity(intent)
                 }
 
                 recyclerView_SmartphonesList.adapter = adapter

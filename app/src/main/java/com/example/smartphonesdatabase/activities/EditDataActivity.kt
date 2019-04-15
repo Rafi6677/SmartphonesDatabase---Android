@@ -3,26 +3,39 @@ package com.example.smartphonesdatabase.activities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.EditText
 import android.widget.Toast
 import com.example.smartphonesdatabase.R
 import com.example.smartphonesdatabase.models.Smartphone
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_add_data.*
+import kotlinx.android.synthetic.main.activity_add_data.brandInput
+import kotlinx.android.synthetic.main.activity_add_data.modelInput
+import kotlinx.android.synthetic.main.activity_add_data.systemVersionInput
+import kotlinx.android.synthetic.main.activity_add_data.websiteInput
+import kotlinx.android.synthetic.main.activity_edit_data.*
 import java.util.*
 
-class AddDataActivity : AppCompatActivity() {
+class EditDataActivity : AppCompatActivity() {
+
+    var smartphone: Smartphone? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_data)
+        setContentView(R.layout.activity_edit_data)
 
-        supportActionBar?.title = "Dodaj smartfon:"
+        smartphone = intent.getParcelableExtra<Smartphone>(SmartphonesListActivity.SMARTPHONE_KEY)
 
+        setupData()
         performOnLeaveListener()
+        prepareButtonListeners()
+    }
 
-        addSmartphone_button.setOnClickListener {
-            addSmartphoneToDb()
-        }
+    private fun setupData() {
+        brandInput.setText(smartphone!!.brand)
+        modelInput.setText(smartphone!!.model)
+        systemVersionInput.setText(smartphone!!.systemVersion)
+        websiteInput.setText(smartphone!!.website)
     }
 
     private fun performOnLeaveListener() {
@@ -62,13 +75,23 @@ class AddDataActivity : AppCompatActivity() {
         }
     }
 
-    private fun addSmartphoneToDb() {
+    private fun prepareButtonListeners() {
+        cancel_button.setOnClickListener {
+            finish()
+        }
+
+        saveChanges_button.setOnClickListener {
+            saveChanges()
+        }
+    }
+
+    private fun saveChanges() {
         if(brandInput.text.isEmpty() || modelInput.text.isEmpty() ||
             systemVersionInput.text.isEmpty() || websiteInput.text.isEmpty()) {
             Toast.makeText(this, "Wszystkie pola muszą być wypełnione", Toast.LENGTH_SHORT).show()
         }
         else {
-            val id = UUID.randomUUID().toString()
+            val id = smartphone!!.id
             val brand = brandInput.text.toString()
             val model = modelInput.text.toString()
             val systemVersion = systemVersionInput.text.toString()
