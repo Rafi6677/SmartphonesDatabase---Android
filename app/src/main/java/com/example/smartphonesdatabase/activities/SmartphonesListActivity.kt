@@ -39,6 +39,8 @@ class SmartphonesListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_smartphones_list)
 
+        supportActionBar?.title = "Smartfony"
+
         showData()
     }
 
@@ -130,6 +132,7 @@ class SmartphonesListActivity : AppCompatActivity() {
 
             var color = 0
             val currentBackgroundCollor = view.background
+
             if(currentBackgroundCollor is ColorDrawable) {
                 color = currentBackgroundCollor.color
             }
@@ -145,13 +148,13 @@ class SmartphonesListActivity : AppCompatActivity() {
                 smartphonesToDelete[id] = false
             }
 
-            println(smartphonesToDelete)
             item.isLongClickable
         }
 
         recyclerView_SmartphonesList.adapter = adapter
     }
 }
+
 
 class SmartphoneItem(val smartphone: Smartphone): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {

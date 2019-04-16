@@ -24,6 +24,8 @@ class EditDataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_data)
 
+        supportActionBar?.title = "Edycja danych:"
+
         smartphone = intent.getParcelableExtra<Smartphone>(SmartphonesListActivity.SMARTPHONE_KEY)
 
         setupData()
