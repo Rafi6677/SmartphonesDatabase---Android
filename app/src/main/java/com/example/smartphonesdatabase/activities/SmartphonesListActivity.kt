@@ -2,18 +2,17 @@ package com.example.smartphonesdatabase.activities
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.util.SparseIntArray
+import android.support.v7.widget.DividerItemDecoration
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.smartphonesdatabase.R
 import com.example.smartphonesdatabase.models.Smartphone
+import com.example.smartphonesdatabase.viewmodels.SmartphoneItem
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -23,7 +22,6 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_smartphones_list.*
 import kotlinx.android.synthetic.main.smartphones_list_row.view.*
-import java.util.*
 import kotlin.collections.HashMap
 
 class SmartphonesListActivity : AppCompatActivity() {
@@ -32,7 +30,7 @@ class SmartphonesListActivity : AppCompatActivity() {
     var smartphonesToDelete = HashMap<String, Boolean>()
 
     companion object {
-        val SMARTPHONE_KEY = "smartphoneKey"
+        const val SMARTPHONE_KEY = "smartphoneKey"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,37 +59,29 @@ class SmartphonesListActivity : AppCompatActivity() {
             }
             R.id.deleteSmartphone -> {
                 smartphonesToDelete.values.forEach {
-                    if(it)
-                        isReadyToDelete = true
+                    if(it) isReadyToDelete = true
                 }
 
                 if(isReadyToDelete) {
                     AlertDialog.Builder(this)
                         .setTitle("UWAGA!")
                         .setMessage("Zamierzasz usunąć rekordy z bazy danych. Kontynuować?")
-                        .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        .setPositiveButton("OK") { _, _ ->
                             for((key, value) in smartphonesToDelete) {
                                 if(value) {
                                     val ref = FirebaseDatabase.getInstance().getReference("smartphones/$key")
                                     ref.removeValue()
-                                        .addOnSuccessListener {
-                                            println("usunieto")
-                                        }
-                                        .addOnFailureListener {
-                                            println("nie usunieto")
-                                        }
                                 }
                             }
                             adapter.clear()
                             showData()
-                        })
-                        .setNegativeButton("Anuluj", DialogInterface.OnClickListener { dialog, which ->
+                        }
+                        .setNegativeButton("Anuluj") { _, _ ->
                             adapter.clear()
                             showData()
-                        })
+                        }
                         .show()
-                }
-                else {
+                } else {
                     Toast.makeText(this, "Brak zaznaczonych elementów.", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -131,10 +121,10 @@ class SmartphonesListActivity : AppCompatActivity() {
             val id = smartphoneItem.smartphone.id
 
             var color = 0
-            val currentBackgroundCollor = view.background
+            val currentBackgroundColor = view.background
 
-            if(currentBackgroundCollor is ColorDrawable) {
-                color = currentBackgroundCollor.color
+            if(currentBackgroundColor is ColorDrawable) {
+                color = currentBackgroundColor.color
             }
 
             if(color == resources.getColor(R.color.notSelected)) {
@@ -152,17 +142,6 @@ class SmartphonesListActivity : AppCompatActivity() {
         }
 
         recyclerView_SmartphonesList.adapter = adapter
-    }
-}
-
-
-class SmartphoneItem(val smartphone: Smartphone): Item<ViewHolder>() {
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.brand_textview.text = smartphone.brand
-        viewHolder.itemView.model_textview.text = smartphone.model
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.smartphones_list_row
+        recyclerView_SmartphonesList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
     }
 }

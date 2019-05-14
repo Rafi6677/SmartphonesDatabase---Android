@@ -3,18 +3,17 @@ package com.example.smartphonesdatabase.activities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
 import android.widget.Toast
 import com.example.smartphonesdatabase.R
 import com.example.smartphonesdatabase.models.Smartphone
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_add_data.*
 import kotlinx.android.synthetic.main.activity_add_data.brandInput
 import kotlinx.android.synthetic.main.activity_add_data.modelInput
 import kotlinx.android.synthetic.main.activity_add_data.systemVersionInput
 import kotlinx.android.synthetic.main.activity_add_data.websiteInput
 import kotlinx.android.synthetic.main.activity_edit_data.*
-import java.util.*
+import android.net.Uri
+
 
 class EditDataActivity : AppCompatActivity() {
 
@@ -70,14 +69,21 @@ class EditDataActivity : AppCompatActivity() {
 
         websiteInput.setOnFocusChangeListener { v, hasFocus ->
             if(!hasFocus) {
-                if(websiteInput.text.isEmpty()) {
-                    Toast.makeText(this, "Pole 'WWW' nie może być puste.", Toast.LENGTH_SHORT).show()
+                val url = websiteInput.text.toString()
+
+                if(!url.startsWith("http://") && !url.startsWith("https://")) {
+                    websiteInput.setText("http://$url")
                 }
             }
         }
     }
 
     private fun prepareButtonListeners() {
+        website_button.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(websiteInput.text.toString()))
+            startActivity(browserIntent)
+        }
+
         cancel_button.setOnClickListener {
             finish()
         }
@@ -115,5 +121,23 @@ class EditDataActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putString("brand", brandInput.text.toString())
+        outState?.putString("model", modelInput.text.toString())
+        outState?.putString("systemVersion", systemVersionInput.text.toString())
+        outState?.putString("website", websiteInput.text.toString())
+
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        brandInput.setText(savedInstanceState?.getString("brand"))
+        modelInput.setText(savedInstanceState?.getString("model"))
+        systemVersionInput.setText(savedInstanceState?.getString("systemVersion"))
+        websiteInput.setText(savedInstanceState?.getString("website"))
     }
 }

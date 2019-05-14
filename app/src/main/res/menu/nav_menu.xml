@@ -7,12 +7,14 @@
             android:id="@+id/addSmartphone"
             android:title="+"
             app:showAsAction="ifRoom"
+            android:icon="@drawable/ic_add"
     />
 
     <item
             android:id="@+id/deleteSmartphone"
             android:title="-"
             app:showAsAction="ifRoom"
+            android:icon="@drawable/ic_remove"
     />
 
 </menu>
