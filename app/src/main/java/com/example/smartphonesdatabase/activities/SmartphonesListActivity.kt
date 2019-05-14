@@ -1,6 +1,5 @@
 package com.example.smartphonesdatabase.activities
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
@@ -9,6 +8,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DividerItemDecoration
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.example.smartphonesdatabase.R
 import com.example.smartphonesdatabase.models.Smartphone
@@ -18,10 +18,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_smartphones_list.*
-import kotlinx.android.synthetic.main.smartphones_list_row.view.*
 import kotlin.collections.HashMap
 
 class SmartphonesListActivity : AppCompatActivity() {
@@ -40,6 +38,7 @@ class SmartphonesListActivity : AppCompatActivity() {
         supportActionBar?.title = "Smartfony"
 
         showData()
+        prepareButton()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -93,6 +92,7 @@ class SmartphonesListActivity : AppCompatActivity() {
     private fun showData() {
         val ref = FirebaseDatabase.getInstance().getReference("/smartphones")
         smartphonesToDelete.clear()
+        isAnyFieldChecked(smartphonesToDelete)
 
         ref.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
@@ -138,10 +138,36 @@ class SmartphonesListActivity : AppCompatActivity() {
                 smartphonesToDelete[id] = false
             }
 
+            isAnyFieldChecked(smartphonesToDelete)
+
             item.isLongClickable
         }
 
         recyclerView_SmartphonesList.adapter = adapter
         recyclerView_SmartphonesList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+    }
+
+    private fun prepareButton() {
+        uncheckAll_button.setOnClickListener {
+            smartphonesToDelete.clear()
+            adapter.clear()
+            showData()
+        }
+    }
+
+    private fun isAnyFieldChecked(list: HashMap<String, Boolean>): Boolean {
+        var isFieldChecked = false
+
+        list.values.forEach {
+            if(it) isFieldChecked = true
+        }
+
+        if(isFieldChecked) {
+            uncheckAll_button.visibility = View.VISIBLE
+        } else {
+            uncheckAll_button.visibility = View.INVISIBLE
+        }
+
+        return isFieldChecked
     }
 }

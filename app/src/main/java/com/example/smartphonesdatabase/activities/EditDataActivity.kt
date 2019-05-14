@@ -25,7 +25,7 @@ class EditDataActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Edycja danych:"
 
-        smartphone = intent.getParcelableExtra<Smartphone>(SmartphonesListActivity.SMARTPHONE_KEY)
+        smartphone = intent.getParcelableExtra(SmartphonesListActivity.SMARTPHONE_KEY)
 
         setupData()
         performOnLeaveListener()
@@ -40,7 +40,7 @@ class EditDataActivity : AppCompatActivity() {
     }
 
     private fun performOnLeaveListener() {
-        brandInput.setOnFocusChangeListener { v, hasFocus ->
+        brandInput.setOnFocusChangeListener { _, hasFocus ->
             if(!hasFocus) {
                 if(brandInput.text.isEmpty()) {
                     Toast.makeText(this, "Pole 'Producent' nie może być puste.", Toast.LENGTH_SHORT)
@@ -49,7 +49,7 @@ class EditDataActivity : AppCompatActivity() {
             }
         }
 
-        modelInput.setOnFocusChangeListener { v, hasFocus ->
+        modelInput.setOnFocusChangeListener { _, hasFocus ->
             if(!hasFocus) {
                 if(modelInput.text.isEmpty()) {
                     Toast.makeText(this, "Pole 'Model' nie może być puste.", Toast.LENGTH_SHORT)
@@ -58,7 +58,7 @@ class EditDataActivity : AppCompatActivity() {
             }
         }
 
-        systemVersionInput.setOnFocusChangeListener { v, hasFocus ->
+        systemVersionInput.setOnFocusChangeListener { _, hasFocus ->
             if(!hasFocus) {
                 if(systemVersionInput.text.isEmpty()) {
                     Toast.makeText(this, "Pole 'Wersja systemu' nie może być puste.", Toast.LENGTH_SHORT)
@@ -67,7 +67,7 @@ class EditDataActivity : AppCompatActivity() {
             }
         }
 
-        websiteInput.setOnFocusChangeListener { v, hasFocus ->
+        websiteInput.setOnFocusChangeListener { _, hasFocus ->
             if(!hasFocus) {
                 val url = websiteInput.text.toString()
 
@@ -109,12 +109,6 @@ class EditDataActivity : AppCompatActivity() {
             val smartphone = Smartphone(id, brand, model, systemVersion, website)
 
             ref.setValue(smartphone)
-                .addOnSuccessListener {
-
-                }
-                .addOnFailureListener {
-
-                }
 
             finish()
             val intent = Intent(this, SmartphonesListActivity::class.java)
